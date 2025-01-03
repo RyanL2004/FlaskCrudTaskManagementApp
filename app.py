@@ -23,7 +23,14 @@ class Todo(db.Model):
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        task_priority = request.form['priority']
+        task_due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%d') if request.form['due_date'] else None
+        
+        new_task = Todo(
+            content=task_content,
+            priority=task_priority,
+            due_date=task_due_date
+        )
 
         try:
             db.session.add(new_task)
