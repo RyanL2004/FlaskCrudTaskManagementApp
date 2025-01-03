@@ -69,6 +69,16 @@ def update(id):
     
     else:
         return render_template('update.html', task = task)
+
+@app.route('/toggle/<int:id>')
+def toggle_complete(id):
+    task = Todo.query.get_or_404(id)
+    task.completed = not task.completed
+    try:
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'There was an issue updating the task'
     
 
 if __name__ == "__main__":
