@@ -6,10 +6,15 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
+# Modified Todo model in app.py
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    due_date = db.Column(db.DateTime)
+    priority = db.Column(db.String(20), default='Medium')  # High, Medium, Low
+    completed = db.Column(db.Boolean, default=False)
+    description = db.Column(db.Text)
 
     def __repr__(self):
         return '<Task %r>' % self.id
